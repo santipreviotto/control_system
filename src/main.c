@@ -15,15 +15,13 @@
 #include <avr/io.h>
 
 /* local libs */
-#include "lib/inc/blink.h"
+#include "lib/inc/pwm.h"
 
 /**
  *	\brief Program entrypoint.
  */
 int main() {
-    DDRB |= (1 << IO_REG_BLINKING_LED);
     while (1) {
-        vBlink();
     }
     return 0;
 }
