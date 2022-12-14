@@ -13,15 +13,15 @@
 # \file Makefile
 # files macros #
 MAIN_FILE = main
-LIB_FILE = blink
+LIB_FILE = pwm
 
 # microcontroller macros #
-CPU_ID = atmega328p
+CPU_ID = atmega2560
 CPU_FREQ = 16000000UL
 
 # programmer macros #
-PROG_ID = arduino
-PROG_BAUD = 57600
+PROG_ID = wiring
+PROG_BAUD = 115200
 PROG_PORT = /dev/ttyUSB0
 
 # compiler and uploader macros #
