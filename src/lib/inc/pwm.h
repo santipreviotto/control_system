@@ -15,4 +15,22 @@
 #ifndef SRC_LIB_INC_PWM_H_
 #define SRC_LIB_INC_PWM_H_
 
+typedef enum {
+    NORMAL,
+    CTC,
+    FAST,
+    PHASECORRECT,
+    PHASEANDFREQCORRECT,
+} PwmMode_t;
+
+/**
+ *  \brief  Function to initializate
+            PWM feature.
+ */
+void PwmInit(PwmMode_t PwmMode);
+void PwmPowerOn();
+void PwmPowerOff();
+void PwmSetFreq(uint32_t PwmFreq);
+void PwmSetDuty(uint8_t PwmDuty);
+
 #endif  /* SRC_LIB_INC_PWM_H_ */
