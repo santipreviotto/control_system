@@ -19,6 +19,18 @@
 
 /* macro definition */
 
-/**
- *  \brief.
- */
+
+void PwmInit(PwmMode_t PwmMode) {
+}
+
+void PwmPowerOn() {
+}
+
+void PwmPowerOff() {
+}
+
+void PwmSetFreq(uint32_t PwmFreq) {
+}
+
+void PwmSetDuty(uint8_t PwmDuty) {
+}
