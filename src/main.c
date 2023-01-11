@@ -13,17 +13,40 @@
 /** \file main.c */
 /* third party libs */
 #include <avr/io.h>
-
+#include <avr/interrupt.h>
 /* local libs */
-#include "lib/inc/blink.h"
+#include "lib/inc/pwm.h"
 
 /**
  *	\brief Program entrypoint.
  */
 int main() {
-    DDRB |= (1 << IO_REG_BLINKING_LED);
+    /*
+    DDRB |= (1 << DDB5);
+    cli();
+    TCCR1A &=~(1 << WGM10);
+    TCCR1A &=~(1 << WGM11);
+    TCCR1B &=~(1 << WGM12);
+    TCCR1B |= (1 << WGM13);
+   
+    TCNT1 = 0x0000;
+    ICR1 = 10000;
+    TCCR1A &=~(1 << COM1A0);
+    TCCR1A |= (1 << COM1A1);
+    OCR1A = 1000;
+    sei();
+    TCCR1B &=~(1 << CS10);
+    TCCR1B |= (1 << CS11);
+    TCCR1B &=~(1 << CS12);
+    */
+    DDRB |= (1 << DDB5); 
+    cli();
+    PwmInit(PHASEANDFREQCORRECT);
+    sei();
+    PwmPowerOn(N8);
+    PwmSetFreq(100);
+    PwmSetDuty(5.8);
     while (1) {
-        vBlink();
     }
     return 0;
 }
