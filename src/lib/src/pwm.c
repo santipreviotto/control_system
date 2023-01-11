@@ -22,18 +22,27 @@
 
 void PwmTimer1Init(PwmTimer1Mode_t PwmTimer1Mode) {
     switch (PwmTimer1Mode) {
-        case NORMAL:
-            TCCR1A = (1 << WGM10);
-            TCCR1A = (1 << WGM11);
-            TCCR1B = (1 << WGM12);
-            TCCR1B = (1 << WGM13);
+        case FAST:
+            TCCR1A &=~(1 << WGM10);
+            TCCR1A |= (1 << WGM11);
+            TCCR1B |= (1 << WGM12);
+            TCCR1B |= (1 << WGM13);
             break;
         default:
             break;
     }
 }
 
-void PwmPowerOn() {
+void PwmTimer1PowerOn(PwmTimer1Prescaler_t PwmTimer1Prescaler) {
+    switch (PwmTimer1Prescaler) {
+        case N1024:
+            TCCR1B |= (1 << CS10);
+            TCCR1B &=~(1 << CS11);
+            TCCR1B |= (1 << CS12);
+            break;
+        default:
+            break;
+    }
 }
 
 void PwmPowerOff() {

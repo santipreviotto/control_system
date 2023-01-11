@@ -23,12 +23,20 @@ typedef enum {
     PHASEANDFREQCORRECT,
 } PwmTimer1Mode_t;
 
+typedef enum {
+    NOFF,
+    N1,
+    N8,
+    N64,
+    N256,
+    N1024,
+} PwmTimer1Prescaler_t;
 /**
  *  \brief  Function to initializate
             PWM feature.
  */
 void PwmTimer1Init(PwmTimer1Mode_t PwmTimer1Mode);
-void PwmPowerOn();
+void PwmTimer1PowerOn(PwmTimer1Prescaler_t PwmTimer1Prescaler);
 void PwmPowerOff();
 void PwmSetFreq(uint32_t PwmFreq);
 void PwmSetDuty(uint8_t PwmDuty);
