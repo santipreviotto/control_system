@@ -21,13 +21,13 @@ typedef enum {
     FAST,
     PHASECORRECT,
     PHASEANDFREQCORRECT,
-} PwmMode_t;
+} PwmTimer1Mode_t;
 
 /**
  *  \brief  Function to initializate
             PWM feature.
  */
-void PwmInit(PwmMode_t PwmMode);
+void PwmTimer1Init(PwmTimer1Mode_t PwmTimer1Mode);
 void PwmPowerOn();
 void PwmPowerOff();
 void PwmSetFreq(uint32_t PwmFreq);

@@ -20,7 +20,17 @@
 /* macro definition */
 
 
-void PwmInit(PwmMode_t PwmMode) {
+void PwmTimer1Init(PwmTimer1Mode_t PwmTimer1Mode) {
+    switch (PwmTimer1Mode) {
+        case NORMAL:
+            TCCR1A = (1 << WGM10);
+            TCCR1A = (1 << WGM11);
+            TCCR1B = (1 << WGM12);
+            TCCR1B = (1 << WGM13);
+            break;
+        default:
+            break;
+    }
 }
 
 void PwmPowerOn() {
