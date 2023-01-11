@@ -15,13 +15,13 @@
 #ifndef SRC_LIB_INC_PWM_H_
 #define SRC_LIB_INC_PWM_H_
 
+#define CPUFREQ             16000000
+#define PRESCOFF            0
+#define PRESC8              8
+
 typedef enum {
-    NORMAL,
-    CTC,
-    FAST,
-    PHASECORRECT,
     PHASEANDFREQCORRECT,
-} PwmTimer1Mode_t;
+} PwmMode_t;
 
 typedef enum {
     NOFF,
@@ -30,15 +30,16 @@ typedef enum {
     N64,
     N256,
     N1024,
-} PwmTimer1Prescaler_t;
+} PwmPrescaler_t;
+
 /**
  *  \brief  Function to initializate
             PWM feature.
  */
-void PwmTimer1Init(PwmTimer1Mode_t PwmTimer1Mode);
-void PwmTimer1PowerOn(PwmTimer1Prescaler_t PwmTimer1Prescaler);
+void PwmInit(PwmMode_t PwmMode);
+void PwmPowerOn(PwmPrescaler_t PwmPrescaler);
 void PwmPowerOff();
 void PwmSetFreq(uint32_t PwmFreq);
-void PwmSetDuty(uint8_t PwmDuty);
+void PwmSetDuty(float PwmDuty);
 
 #endif  /* SRC_LIB_INC_PWM_H_ */

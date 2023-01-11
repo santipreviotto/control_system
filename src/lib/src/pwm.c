@@ -18,14 +18,22 @@
 #include "../inc/pwm.h"
 
 /* macro definition */
+#define PERCENTMAX              100.0
+#define CALCULEVALUE            2
 
+volatile uint8_t PrescalerValue;
+volatile uint32_t PwmFrequency;
 
-void PwmTimer1Init(PwmTimer1Mode_t PwmTimer1Mode) {
-    switch (PwmTimer1Mode) {
-        case FAST:
+static float FreqCalcule(uint32_t FreqValue, uint16_t PrescValue) {
+    return ((float)(CPUFREQ) / (float)((FreqValue * CALCULEVALUE * PrescValue)));
+}
+
+void PwmInit(PwmMode_t PwmMode) {
+    switch (PwmMode) {
+        case PHASEANDFREQCORRECT:
             TCCR1A &=~(1 << WGM10);
-            TCCR1A |= (1 << WGM11);
-            TCCR1B |= (1 << WGM12);
+            TCCR1A &=~(1 << WGM11);
+            TCCR1B &=~(1 << WGM12);
             TCCR1B |= (1 << WGM13);
             break;
         default:
@@ -33,14 +41,21 @@ void PwmTimer1Init(PwmTimer1Mode_t PwmTimer1Mode) {
     }
 }
 
-void PwmTimer1PowerOn(PwmTimer1Prescaler_t PwmTimer1Prescaler) {
-    switch (PwmTimer1Prescaler) {
-        case N1024:
-            TCCR1B |= (1 << CS10);
-            TCCR1B &=~(1 << CS11);
-            TCCR1B |= (1 << CS12);
+void PwmPowerOn(PwmPrescaler_t PwmPrescaler) {
+    switch (PwmPrescaler) {
+        case N8:
+            PrescalerValue = PRESC8;
+            TCCR1B &=~(1 << CS10);
+            TCCR1B |= (1 << CS11);
+            TCCR1B &=~(1 << CS12);
             break;
+        case NOFF:
+            PrescalerValue = PRESCOFF;
+            TCCR1B &=~(1 << CS10);
+            TCCR1B &=~(1 << CS11);
+            TCCR1B &=~(1 << CS12);
         default:
+            PrescalerValue = PRESCOFF;
             break;
     }
 }
@@ -49,7 +64,15 @@ void PwmPowerOff() {
 }
 
 void PwmSetFreq(uint32_t PwmFreq) {
+    PwmFrequency = PwmFreq;
+    TCNT1 = 0x0000;
+    ICR1 = (uint16_t) FreqCalcule(PwmFrequency, PrescalerValue);
 }
 
-void PwmSetDuty(uint8_t PwmDuty) {
+void PwmSetDuty(float PwmDuty) {
+    TCCR1A &=~(1 << COM1A0);
+    TCCR1A |= (1 << COM1A1);
+    OCR1A = (uint16_t)((PwmDuty / PERCENTMAX) * FreqCalcule(PwmFrequency, PrescalerValue));
 }
+
+
